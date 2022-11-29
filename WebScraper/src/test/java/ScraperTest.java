@@ -1,11 +1,14 @@
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 class ScraperTest {
 
     @Test
     public void test() throws IOException, InterruptedException {
-        Website lowes = new Lowes();
-        lowes.search("Hammer");
+        Google google = new Google();
+        google.search("hammer");
     }
+
 }
