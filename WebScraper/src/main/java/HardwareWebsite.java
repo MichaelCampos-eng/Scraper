@@ -42,7 +42,7 @@ public class HardwareWebsite implements Website {
             WebElement price = product.findElement(By.xpath(pricePath));
             WebElement url = product.findElement(By.xpath(".//a"));
             productRepo.put(brand.getText(), new ProductContents(brand.getText(), description.getText(),
-                    price.getText(), website + url.getText()));
+                    price.getText(), website + url.getText(), "caca"));
             System.out.println(brand.getText() + " | " + price.getText() + " | " + url.getText() + " | " + description.getText());
         }
         driver.close();

@@ -9,6 +9,7 @@ class ScraperTest {
     public void test() throws IOException, InterruptedException {
         Google google = new Google();
         google.search("hammer");
+        google.getCheapProducts();
     }
 
 }

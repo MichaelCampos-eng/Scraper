@@ -12,12 +12,26 @@ public class ProductContents {
     private String price;
     private String store;
     private String ratings;
+    private String reviews;
 
-    public ProductContents(String inputName, String inputPrice, String inputStore, String inputRatings) {
+    public ProductContents(String inputName, String inputPrice, String inputStore, String inputRatings, String inputReviews) {
         name = inputName;
         price = inputPrice;
         store = inputStore;
         ratings = inputRatings;
+        reviews = inputReviews;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getRatings() {
+        return ratings;
     }
 
     private void parseProductComponents() {
@@ -46,11 +60,13 @@ public class ProductContents {
         }
 
         if (itemTitle.isPresent() && itemPrice.isPresent() &&  itemStore.isPresent()) {
-            String ratings = "unknown";
-            if (itemRatings.isPresent()) {
-                ratings = itemRatings.get();
-            }
-            return Optional.of(new ProductContents(itemTitle.get(), itemPrice.get(), itemStore.get(), ratings));
+            String ratingsItem = itemRatings.isPresent() ? itemRatings.get() : "unknown";
+            Matcher priceMatcher = Pattern.compile("\\$(\\d+\\.\\d+)").matcher(itemPrice.get());
+            Matcher ratingsMatcher = Pattern.compile("(\\w+(\\d+)(' stars')\\:*\\-*\\.*\\s*)*").matcher(ratingsItem);
+            String price = priceMatcher.matches() ? priceMatcher.group(1) : "unknown";
+            String ratings = ratingsMatcher.matches() ? ratingsMatcher.group(1) : "3";
+            String reviews = ratingsMatcher.matches() ? ratingsMatcher.group(2) : "0";
+            return Optional.of(new ProductContents(itemTitle.get(), price, itemStore.get(), ratings, reviews));
         }
 
         return Optional.empty();
